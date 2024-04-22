@@ -17,40 +17,24 @@ import { supabase } from "../../utils/supabase";
 import Link from "next/link";
 
 export default function DreamPage() {
-    const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
-    const [restoredImage, setRestoredImage] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [restoredLoaded, setRestoredLoaded] = useState<boolean>(false);
-    const [sideBySide, setSideBySide] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
-    const [photoName, setPhotoName] = useState<string | null>(null);
+    const [originalPhoto, setOriginalPhoto] = useState("");
+    const [restoredImage, setRestoredImage] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [restoredLoaded, setRestoredLoaded] = useState(false);
+    const [sideBySide, setSideBySide] = useState(false);
+    const [error, setError] = useState("");
+    const [photoName, setPhotoName] = useState("");
     const [theme, setTheme] = useState<themeType>("Modern");
     const [room, setRoom] = useState<roomType>("Living Room");
     const [renderAmount, setRenderAmount] = useState(1);
     const [uploadedFiles, setUploadedFiles] = useState([]);
-    const { getRootProps, getInputProps } = useDropzone({
-        onDrop: (acceptedFiles) => {
-            setUploadedFiles(acceptedFiles);
-            if (acceptedFiles.length !== 0) {
-                const image = acceptedFiles[0];
-                const imageName = image.name;
-                const reader = new FileReader();
-                reader.onload = () => {
-                    const imageUrl = reader.result as string; // Cast imageUrl to string
-                    setPhotoName(imageName);
-                    setOriginalPhoto(imageUrl);
-                    generatePhoto(imageUrl);
-                };
-                reader.readAsDataURL(image);
-            }
-        },
-    });
+   
 
     const clearUploadedFiles = () => {
         setUploadedFiles([]);
     };
 
-    async function generatePhoto(fileUrl: string) {
+    async function generatePhoto(fileUrl) {
         await new Promise((resolve) => setTimeout(resolve, 200));
         setLoading(true);
         const res = await fetch("/generate", {
@@ -77,7 +61,7 @@ export default function DreamPage() {
         }, 1300);
     }
 
-    async function insertSupabase(restoredImageUrl: string) {
+    async function insertSupabase(restoredImageUrl) {
         try {
             const { data, error } = await supabase
                 .from("images")
@@ -131,7 +115,7 @@ export default function DreamPage() {
                                             theme={theme}
                                             setTheme={(newTheme) =>
                                                 setTheme(
-                                                    newTheme as typeof theme
+                                                    newTheme
                                                 )
                                             }
                                             themes={themes}
@@ -152,7 +136,7 @@ export default function DreamPage() {
                                         <DropDown
                                             theme={room}
                                             setTheme={(newRoom) =>
-                                                setRoom(newRoom as typeof room)
+                                                setRoom(newRoom)
                                             }
                                             themes={rooms}
                                             />
@@ -227,8 +211,8 @@ export default function DreamPage() {
                             </div>
                             {restoredLoaded && sideBySide && (
                                 <CompareSlider
-                                    original={originalPhoto!}
-                                    restored={restoredImage!}
+                                    original={originalPhoto}
+                                    restored={restoredImage}
                                 />
                             )}
                             {!originalPhoto && (
@@ -347,8 +331,8 @@ export default function DreamPage() {
                                     <button
                                     onClick={() => {
                                         downloadPhoto(
-                                            restoredImage!,
-                                            appendNewToName(photoName!)
+                                            restoredImage,
+                                            appendNewToName(photoName)
                                         );
                                     }}
                                     className="bg-white rounded-full text-black border font-medium px-4 py-2 mt-8 hover:bg-gray-100 transition"
