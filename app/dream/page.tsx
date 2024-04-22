@@ -17,24 +17,23 @@ import { supabase } from "../../utils/supabase";
 import Link from "next/link";
 
 export default function DreamPage() {
-    const [originalPhoto, setOriginalPhoto] = useState("");
-    const [restoredImage, setRestoredImage] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [restoredLoaded, setRestoredLoaded] = useState(false);
-    const [sideBySide, setSideBySide] = useState(false);
-    const [error, setError] = useState("");
-    const [photoName, setPhotoName] = useState("");
+    const [originalPhoto, setOriginalPhoto] = useState<string | null>(null);
+    const [restoredImage, setRestoredImage] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [restoredLoaded, setRestoredLoaded] = useState<boolean>(false);
+    const [sideBySide, setSideBySide] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
+    const [photoName, setPhotoName] = useState<string | null>(null);
     const [theme, setTheme] = useState<themeType>("Modern");
     const [room, setRoom] = useState<roomType>("Living Room");
     const [renderAmount, setRenderAmount] = useState(1);
     const [uploadedFiles, setUploadedFiles] = useState([]);
-   
 
     const clearUploadedFiles = () => {
         setUploadedFiles([]);
     };
 
-    async function generatePhoto(fileUrl) {
+    async function generatePhoto(fileUrl: string) {
         await new Promise((resolve) => setTimeout(resolve, 200));
         setLoading(true);
         const res = await fetch("/generate", {
@@ -61,7 +60,7 @@ export default function DreamPage() {
         }, 1300);
     }
 
-    async function insertSupabase(restoredImageUrl) {
+    async function insertSupabase(restoredImageUrl: string) {
         try {
             const { data, error } = await supabase
                 .from("images")
@@ -115,7 +114,7 @@ export default function DreamPage() {
                                             theme={theme}
                                             setTheme={(newTheme) =>
                                                 setTheme(
-                                                    newTheme
+                                                    newTheme as typeof theme
                                                 )
                                             }
                                             themes={themes}
@@ -136,7 +135,7 @@ export default function DreamPage() {
                                         <DropDown
                                             theme={room}
                                             setTheme={(newRoom) =>
-                                                setRoom(newRoom)
+                                                setRoom(newRoom as typeof room)
                                             }
                                             themes={rooms}
                                             />
@@ -211,28 +210,28 @@ export default function DreamPage() {
                             </div>
                             {restoredLoaded && sideBySide && (
                                 <CompareSlider
-                                    original={originalPhoto}
-                                    restored={restoredImage}
+                                    original={originalPhoto!}
+                                    restored={restoredImage!}
                                 />
                             )}
                             {!originalPhoto && (
                                 <div
                                     className="flex flex-col items-center justify-center border-dotted border-2 border-gray-400 p-6"
-                                    {...getRootProps()}
+                                    
                                 >
-                                    <input {...getInputProps()} />
+                                    <input/>
                                     <div className="text-center">
                                         <p>
                                             Drag and drop files here or click to
                                             browse.
                                         </p>
-                                        <ul className="mt-4">
+                                        {/* <ul className="mt-4">
                                             {uploadedFiles.map((file) => (
                                                 <li key={file.name}>
                                                     {file.name}
                                                 </li>
                                             ))}
-                                        </ul>
+                                        </ul> */}
                                         {uploadedFiles.length > 0 && (
                                             <button
                                             className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
@@ -331,8 +330,8 @@ export default function DreamPage() {
                                     <button
                                     onClick={() => {
                                         downloadPhoto(
-                                            restoredImage,
-                                            appendNewToName(photoName)
+                                            restoredImage!,
+                                            appendNewToName(photoName!)
                                         );
                                     }}
                                     className="bg-white rounded-full text-black border font-medium px-4 py-2 mt-8 hover:bg-gray-100 transition"
