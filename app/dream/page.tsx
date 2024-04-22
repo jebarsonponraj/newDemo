@@ -28,6 +28,23 @@ export default function DreamPage() {
     const [room, setRoom] = useState<roomType>("Living Room");
     const [renderAmount, setRenderAmount] = useState(1);
     const [uploadedFiles, setUploadedFiles] = useState([]);
+    const { getRootProps, getInputProps } = useDropzone({
+        onDrop: (acceptedFiles: File[]) => {
+            setUploadedFiles([]); // Initialize uploadedFiles with an empty array
+            if (acceptedFiles.length !== 0) {
+                const image = acceptedFiles[0];
+                const imageName = image.name;
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const imageUrl = reader.result as string; // Cast imageUrl to string
+                    setPhotoName(imageName);
+                    setOriginalPhoto(imageUrl);
+                    generatePhoto(imageUrl);
+                };
+                reader.readAsDataURL(image);
+            }
+        },
+    });
 
     const clearUploadedFiles = () => {
         setUploadedFiles([]);
@@ -217,21 +234,21 @@ export default function DreamPage() {
                             {!originalPhoto && (
                                 <div
                                     className="flex flex-col items-center justify-center border-dotted border-2 border-gray-400 p-6"
-                                    
+                                    {...getRootProps()}
                                 >
-                                    <input/>
+                                    <input {...getInputProps()} />
                                     <div className="text-center">
                                         <p>
                                             Drag and drop files here or click to
                                             browse.
                                         </p>
-                                        {/* <ul className="mt-4">
+                                        <ul className="mt-4">
                                             {uploadedFiles.map((file) => (
                                                 <li key={file.name}>
                                                     {file.name}
                                                 </li>
                                             ))}
-                                        </ul> */}
+                                        </ul>
                                         {uploadedFiles.length > 0 && (
                                             <button
                                             className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
