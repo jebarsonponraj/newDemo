@@ -10,6 +10,7 @@ import Toggle from "../../components/Toggle";
 import appendNewToName from "../../utils/appendNewToName";
 import downloadPhoto from "../../utils/downloadPhoto";
 import DropDown from "../../components/DropDown";
+import Particle from "../../components/Particle";
 import { useDropzone } from "react-dropzone";
 import { roomType, rooms, themeType, themes } from "../../utils/dropdownTypes";
 import { supabase } from "../../utils/supabase";
@@ -97,13 +98,14 @@ export default function DreamPage() {
     };
 
     return (
+        <>
         <div className="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
             <Link href="/store">
-                <button className="absolute top-0 right-0 m-4 bg-blue-500 text-white font-medium px-4 py-2 rounded-md hover:bg-blue-600">
+                <button className="z-50 absolute top-0 right-0 m-4 bg-blue-500 text-white font-medium px-4 py-2 rounded-md hover:bg-blue-600">
                     Generated Images
                 </button>
             </Link>
-            <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-4 sm:mb-0 mb-8">
+            <main className="z-50 flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-4 sm:mb-0 mb-8">
                 <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-100 sm:text-6xl mb-5">
                     Generate your <span className="text-blue-600">dream</span>{" "}
                     room
@@ -120,7 +122,7 @@ export default function DreamPage() {
                                                 width={30}
                                                 height={30}
                                                 alt="1 icon"
-                                            />
+                                                />
                                             <p className="text-left font-medium">
                                                 Choose your room theme.
                                             </p>
@@ -133,7 +135,7 @@ export default function DreamPage() {
                                                 )
                                             }
                                             themes={themes}
-                                        />
+                                            />
                                     </div>
                                     <div className="space-y-4 w-full max-w-sm">
                                         <div className="flex mt-10 items-center space-x-3">
@@ -142,7 +144,7 @@ export default function DreamPage() {
                                                 width={30}
                                                 height={30}
                                                 alt="1 icon"
-                                            />
+                                                />
                                             <p className="text-left font-medium">
                                                 Choose your room type.
                                             </p>
@@ -153,34 +155,34 @@ export default function DreamPage() {
                                                 setRoom(newRoom as typeof room)
                                             }
                                             themes={rooms}
-                                        />
+                                            />
                                     </div>
                                     {/* Amount of render */}
                                     {/* <div className="flex mt-10 items-center space-x-3">
                       <Image
-                        src="/number-3-white.svg"
-                        width={30}
-                        height={30}
-                        alt="1 icon"
+                      src="/number-3-white.svg"
+                      width={30}
+                      height={30}
+                      alt="1 icon"
                       />
                       <p className="text-left font-medium">
-                        Enter the amount of renders
+                      Enter the amount of renders
                       </p>
                       <div className="flex gap-4 items-center">
-                        <button
-                            className="bg-white text-black px-4 py-2 rounded-md"
-                            onClick={() => handleRenderAmount("subtract")}
-                        >
-                            -
-                        </button>
-                        <p className="text-white w-3">{renderAmount}</p>
-                        <button
-                            className="bg-white text-black px-4 py-2 rounded-md"
-                            onClick={() => handleRenderAmount("add")}
-                        >
-                            +
-                        </button>
-                    </div>
+                      <button
+                      className="bg-white text-black px-4 py-2 rounded-md"
+                      onClick={() => handleRenderAmount("subtract")}
+                      >
+                      -
+                      </button>
+                      <p className="text-white w-3">{renderAmount}</p>
+                      <button
+                      className="bg-white text-black px-4 py-2 rounded-md"
+                      onClick={() => handleRenderAmount("add")}
+                      >
+                      +
+                      </button>
+                      </div>
                     </div> */}
                                     <div className="mt-4 w-full max-w-sm">
                                         <div className="flex mt-6 w-96 items-center space-x-3">
@@ -207,21 +209,21 @@ export default function DreamPage() {
                             <div
                                 className={`${
                                     restoredLoaded
-                                        ? "visible mt-6 -ml-8"
-                                        : "invisible"
+                                    ? "visible mt-6 -ml-8"
+                                    : "invisible"
                                 }`}
-                            >
+                                >
                                 <Toggle
                                     className={`${
                                         restoredLoaded
-                                            ? "visible mb-6"
-                                            : "invisible"
+                                        ? "visible mb-6"
+                                        : "invisible"
                                     }`}
                                     sideBySide={sideBySide}
                                     setSideBySide={(newVal) =>
                                         setSideBySide(newVal)
                                     }
-                                />
+                                    />
                             </div>
                             {restoredLoaded && sideBySide && (
                                 <CompareSlider
@@ -249,7 +251,7 @@ export default function DreamPage() {
                                         </ul>
                                         {uploadedFiles.length > 0 && (
                                             <button
-                                                className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                            className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                                                 onClick={clearUploadedFiles}
                                             >
                                                 Clear Uploaded Files
@@ -260,13 +262,13 @@ export default function DreamPage() {
                             )}
                             {originalPhoto && !restoredImage && (
                                 <Image
-                                    alt="original photo"
-                                    src={originalPhoto}
-                                    className="rounded-2xl h-96"
+                                alt="original photo"
+                                src={originalPhoto}
+                                className="rounded-2xl h-96"
                                     width={475}
                                     height={475}
-                                />
-                            )}
+                                    />
+                                )}
                             {restoredImage && originalPhoto && !sideBySide && (
                                 <div className="flex sm:space-x-4 sm:flex-row flex-col">
                                     <div>
@@ -279,7 +281,7 @@ export default function DreamPage() {
                                             className="rounded-2xl relative w-full h-96"
                                             width={475}
                                             height={475}
-                                        />
+                                            />
                                     </div>
                                     <div className="sm:mt-0 mt-8">
                                         <h2 className="mb-1 font-medium text-lg">
@@ -289,7 +291,7 @@ export default function DreamPage() {
                                             href={restoredImage}
                                             target="_blank"
                                             rel="noreferrer"
-                                        >
+                                            >
                                             <Image
                                                 alt="restored photo"
                                                 src={restoredImage}
@@ -299,28 +301,28 @@ export default function DreamPage() {
                                                 onLoadingComplete={() =>
                                                     setRestoredLoaded(true)
                                                 }
-                                            />
+                                                />
                                         </a>
                                     </div>
                                 </div>
                             )}
                             {loading && (
                                 <button
-                                    disabled
-                                    className="bg-blue-500 rounded-full text-white font-medium px-4 pt-2 pb-3 mt-8 w-40"
+                                disabled
+                                className="bg-blue-500 rounded-full text-white font-medium px-4 pt-2 pb-3 mt-8 w-40"
                                 >
                                     <span className="pt-4">
                                         <LoadingDots
                                             color="white"
                                             style="large"
-                                        />
+                                            />
                                     </span>
                                 </button>
                             )}
                             {error && (
                                 <div
-                                    className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mt-8"
-                                    role="alert"
+                                className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mt-8"
+                                role="alert"
                                 >
                                     <span className="block sm:inline">
                                         {error}
@@ -330,12 +332,12 @@ export default function DreamPage() {
                             <div className="flex space-x-2 justify-center">
                                 {originalPhoto && !loading && (
                                     <button
-                                        onClick={() => {
-                                            setOriginalPhoto(null);
-                                            setRestoredImage(null);
-                                            setRestoredLoaded(false);
-                                            setError(null);
-                                        }}
+                                    onClick={() => {
+                                        setOriginalPhoto(null);
+                                        setRestoredImage(null);
+                                        setRestoredLoaded(false);
+                                        setError(null);
+                                    }}
                                         className="bg-blue-500 rounded-full text-white font-medium px-4 py-2 mt-8 hover:bg-blue-500/80 transition"
                                     >
                                         Generate New Room
@@ -343,13 +345,13 @@ export default function DreamPage() {
                                 )}
                                 {restoredLoaded && (
                                     <button
-                                        onClick={() => {
-                                            downloadPhoto(
-                                                restoredImage!,
-                                                appendNewToName(photoName!)
-                                            );
-                                        }}
-                                        className="bg-white rounded-full text-black border font-medium px-4 py-2 mt-8 hover:bg-gray-100 transition"
+                                    onClick={() => {
+                                        downloadPhoto(
+                                            restoredImage!,
+                                            appendNewToName(photoName!)
+                                        );
+                                    }}
+                                    className="bg-white rounded-full text-black border font-medium px-4 py-2 mt-8 hover:bg-gray-100 transition"
                                     >
                                         Download Generated Room
                                     </button>
@@ -360,5 +362,7 @@ export default function DreamPage() {
                 </ResizablePanel>
             </main>
         </div>
+        <Particle />
+                                </>
     );
 }

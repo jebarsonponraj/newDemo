@@ -4,12 +4,13 @@ import Header from "../components/Header";
 import SquigglyLines from "../components/SquigglyLines";
 import originalImage from "../public/original-image.jpeg";
 import generatedImage from "../public/generated2.jpeg";
+import Particle from "../components/Particle";
 
 export default function HomePage() {
   return (
     <div className="flex max-w-6xl mx-auto flex-col items-center justify-center py-2 min-h-screen">
       <Header />
-      <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 sm:mt-20 mt-20 background-gradient">
+      <main className=" z-50 flex flex-1 w-full flex-col items-center justify-center text-center px-4 sm:mt-20 mt-20 background-gradient">
         <a
           className="border border-gray-700 rounded-lg py-2 px-4 text-gray-400 text-sm mb-5 transition duration-300 ease-in-out"
         >
@@ -61,6 +62,7 @@ export default function HomePage() {
           </div>
         </div>
       </main>
+      <Particle />
     </div>
   );
 }

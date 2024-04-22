@@ -22,8 +22,11 @@
     "react-countup": "^6.4.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-particles": "^2.12.2",
     "react-use-measure": "^2.1.1",
-    "request-ip": "^3.3.0"
+    "request-ip": "^3.3.0",
+    "tsparticles-engine": "^2.12.0",
+    "tsparticles-preset-stars": "^2.12.0"
   },
   "devDependencies": {
     "@types/node": "18.11.3",
